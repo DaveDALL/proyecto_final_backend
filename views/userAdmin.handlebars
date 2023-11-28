@@ -1,0 +1,30 @@
+<head>
+    <div>
+        <h1>ADMINISTRACION DE USUARIOS</h1>
+    </div>
+</head>
+<main>
+    <div class="container">
+        <div class="col-2"></div>
+        <div>
+            <label for="getAllUsers">Obtener los usuarios completos</label>
+            <form action="/api/users/getAllUsers" method="get" name="getAllUsers">
+                <input type="submit" value="Obtener usuarios">
+            </form>
+        </div>
+        <div>
+            <form action="/" method="delete" name="deleOneUser">
+                <label for="email">Eliminar Usuario</label>
+                <input type="email" name="email" placeholder="Introduzca el Email de Usuario">
+                <input type="submit" value="Eliminar Usuario">
+            </form>
+        </div>
+        <div>
+            <form action="/" method="post" name="userRoll">
+                <label for="email">Cambiar el Rol del Usuario</label>
+                <input type="email" name="email" placeholder="Introduzca el Email de Usuario">
+                <input type="submit" value="Cambiar Rol de Usuario">
+            </form>
+        </div>
+    </div>
+</main>

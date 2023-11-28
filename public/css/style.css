@@ -1,0 +1,163 @@
+* {
+    box-sizing: border-box;
+    background-color: white;
+}
+.open-button {
+    background-color: blue;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+    position: fixed;
+    bottom: 23px;
+    right: 28px;
+    width: 280px;
+  }
+  .popup-chat {
+    max-width: 430px;
+    background-color: lightsteelblue;
+    position: fixed;
+    bottom: 0;
+    right: 15px;
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+    display:none;
+  }
+  .chat-box {
+    align-items: center;
+  }
+  .chat-box > h3 {
+    padding: .3em 15%;
+    margin: .3em 10%;
+  }
+  .form-box {
+    max-width: 430px;
+    min-width: 288px;
+    padding: 10px;
+    background-color: lightsteelblue;
+  }
+  .form-box textarea {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+    resize: none;
+    min-height: 200px;
+  }
+  .form-box > #username {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    resize: none;
+  }
+  .form-box .btn, .btn-end {
+    background-color: blue;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom:10px;
+    opacity: 0.8;
+  }
+  .form-box .btn:hover, .btn-end:hover, .open-button:hover {
+    opacity: 1;
+  }
+
+.view-cart {
+  margin: 20px;
+  padding: 10px;
+  display: flex;
+  justify-content: right;
+}
+#productContainer {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap:wrap;
+  justify-content: center;
+}
+.product-blister {
+  height: 700px;
+  width: 400px;
+  margin: 10px;
+}
+.product-blister .image-box {
+  height: 400px;
+  width: 400px;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  display:inline-flex;
+  justify-content: center;
+}
+.product-blister img {
+  width: 80%;
+  height: 90%;
+}
+.product-blister h4 {
+  padding-left: 20px;
+}
+.product-blister p {
+  padding-left: 15px;
+}
+.product-blister .product-info {
+  height: 200px;
+}
+.product-blister #productPrice {
+  font-size: 200%;
+  text-align: center;
+}
+.product-blister .add-cart-button {
+  display: flex;
+  justify-content: right;
+}
+.product-blister button {
+  padding: 5px;
+  align-content: center;
+}
+.page-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.cart-blister {
+  color: black;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  display: inline-block;
+  align-content: center;
+  border-radius: 45px;
+}
+.cart-product-box {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  align-items: center;
+}
+.cart-product-box img {
+  width: 100px;
+  height: 100px;
+}
+.git-button {
+  width: 200px;
+  height: 50pxx;
+  margin-right: 5px;
+}
+.registration {
+  margin: 10px;
+}
+.advise {
+  margin: 10px;
+}
+
+form {
+  width: 60%;
+}
+
+label, input {
+  display:flex;
+  align-content: center;
+  margin: 10px
+}

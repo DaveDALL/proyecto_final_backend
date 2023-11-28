@@ -1,0 +1,413 @@
+paths:
+  /api/products:
+    get:
+      summary: Obtiene los productos totales del e-commerse, emplea query params para limitar la busqueda, paginar, ordenar, o agregar. Si no se coloca ningún param se obtienen todos productos en una sola página
+      tags:
+        - Busca productos con query params
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: Limite de productos por página, para realizar la paginación
+        - in: query
+          name: pageNum
+          schema:
+            type: integer
+          description: Paginas de productos (la cantidad de páginas depende del limite de productos por página).
+        - in: query
+          name: sort
+          schema:
+            type: string
+          description: La forma de ordenar los productos por precio, asc para orden ascendente, desc para orden descendente.
+        - in: query
+          name: filterBy
+          schema:
+            type: string
+          description: Se puede realizar un filtrado por el estado del producto mediante la función de aggregate; el valor que recibe es status y se relaciona con el siguiente parámetro llamado keyword.
+        - in: query
+          name: keyword
+          schema:
+            type: string
+          description: Se se usa junto con filterBy, los valores que recibe son true o false, es decir si el productos está activo (true) o inactivo (false).
+      responses:
+        '200':
+          description: (OK). Se obtuvieron los productos de forma correcta
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Product'
+                properties:
+                  status:
+                    type: string
+                    description: mensaje de estado de la respuesta
+                  payload:
+                    type: object
+                    description: payload con la información de los productos
+                  page:
+                    type: number
+                    description: numero de la página
+                  totalPages:
+                    type: number
+                    description: total de páginas
+                  hasPrevPage:
+                    type: boolean
+                    description: Si se cuenta página anterior
+                  hasNextPage:
+                    type: boolean
+                    description: Se cuenta con página siguiente
+                  prevPage:
+                    type: number
+                    description: Número de la página anterior. null si no existe
+                  nextPage:
+                    type: number
+                    description: Número de la página siguiente. null si no existe
+                  prevLink:
+                    type: string
+                    description: Enlace a la página anterior. null si no existe
+                  nextLink:
+                    type: string
+                    description: Enlace a la página siguiente. null si no existe
+              example:
+                status: success
+                payload:
+                  _id: 64b33434612c887886e81ea3
+                  code: '1001'
+                  title: Reloj inteligente de 1.72 pulg. IP68
+                  description: Reloj inteligente IP68 para dama o caballero
+                  thumbnails: 
+                    - https://m.media-amazon.com/images/I/51urWDH94tL._AC_SL1200_.jpg
+                  price: 599
+                  stock: 10
+                  status: true
+                  category: smartwatch
+                  owner: admin
+                page: 1
+                totalPages: 1
+                hasPrevPage: false
+                hasNextPage: false
+                prevPage: null
+                nextPage: null
+                prevLink: null
+                nextLink: null
+        '404':
+          description: (Not Found). No fue posible obtener los productos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la solicitud
+                  error:
+                    type: string
+                    description: Mensaje de error 
+                example:
+                  status: error
+                  error: No es posible obtener productos con mongoose
+        '401':
+          description: (Unauthorized). No está autorizado
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Unauthorized
+  /api/products/{pid}:
+    get:
+      summary: Obtiene un producto por su ID
+      tags:
+        - Obtiene un producto por su ID
+      parameters:
+        - in: path
+          name: pid
+          schema:
+            type: string
+            format: ObjectId
+          required: true
+          description: ID del producto autogenerado en MongoDB
+      responses:
+        '200':
+          description: (OK). Se obtiene el producto por su ID
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Product'
+              example:
+                _id: 64b33434612c887886e81ea3
+                code: '1001'
+                title: Reloj inteligente de 1.72 pulg. IP68
+                description: Reloj inteligente IP68 para dama o caballero
+                thumbnails: 
+                  - https://m.media-amazon.com/images/I/51urWDH94tL._AC_SL1200_.jpg
+                price: 599
+                stock: 10
+                status: true
+                category: smartwatch
+                owner: admin
+        '404':
+          description: (Not Found). No fue posible obtener el producto por su ID
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la solicitud
+                  error:
+                    type: string
+                    description: Mensaje de error 
+                example:
+                  status: error
+                  error: No es posible obtener el producto por su ID con mongoose
+        '401':
+          description: (Unauthorized). No está autorizado
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Unauthorized
+  /api/products/newProduct:
+    post:
+      summary: Crea un nuevo producto
+      tags:
+        - Crea un producto nuevo
+      requestBody:
+        description: Información del producto sin incluir el _id, ya que este se autogenera en MongoDB Atlas
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+            example:
+              code: '1001'
+              title: Reloj inteligente de 1.72 pulg. IP68
+              description: Reloj inteligente IP68 para dama o caballero
+              thumbnails: 
+                - https://m.media-amazon.com/images/I/51urWDH94tL._AC_SL1200_.jpg
+              price: 599
+              stock: 10
+              status: true
+              category: smartwatch
+              owner: premiumUserEmail@mail.com
+      responses:
+        '201':
+          description: (Created). El producto se creó con éxito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la solicitud
+                  payload:
+                    type: string
+                    description: Mensaje del estado de la creación 
+                example:
+                  status: success
+                  payload: 64b33434612c887886e81ea3
+        '404':
+          description: (Not Found). No fue posible crear el producto nuevo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la solicitud
+                  error:
+                    type: string
+                    description: Mensaje de error 
+                example:
+                  status: error
+                  error: No es posible crear el producto nuevo con mongoose
+        '401':
+          description: (Unauthorized). No está autorizado
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Unauthorized   
+  /api/products/updateProduct:
+    put:
+      summary: Actualiza un  producto
+      tags:
+        - Actualiza un producto
+      requestBody:
+        description: Información del producto con el _id de MongoDB Atlas
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+            example:
+              _id: 64b33434612c887886e81ea3
+              code: '1001'
+              title: Reloj inteligente de 1.72 pulg. IP68
+              description: Reloj inteligente IP68 para dama o caballero
+              thumbnails: 
+                - https://m.media-amazon.com/images/I/51urWDH94tL._AC_SL1200_.jpg
+              price: 599
+              stock: 10
+              status: true
+              category: smartwatch
+              owner: premiumUserEmail@mail.com
+      responses:
+        '202':
+          description: (Accepted). El producto se actualizó con éxito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la solicitud
+                  payload:
+                    type: string
+                    description: Mensaje del estado de la actualización 
+                example:
+                  status: success
+                  payload: El producto fue actualizado con éxito
+        '404':
+          description: (Not Found). No fue posible actualizar el producto
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la solicitud
+                  error:
+                    type: string
+                    description: Mensaje de error 
+                example:
+                  status: error
+                  error: No es posible actualizar el producto con mongoose
+        '401':
+          description: (Unauthorized). No está autorizado
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Unauthorized
+  /api/products/deleteProduct/{pid}:
+    delete:
+      summary: Elimina un producto por su ID
+      tags:
+        - Elimina un producto por su ID
+      parameters:
+        - in: path
+          name: pid
+          schema:
+            type: string
+            format: ObjectId
+          required: true
+          description: ID del producto autogenerado en MongoDB
+      responses:
+        '202':
+          description: (Accepted). El producto se eliminó con éxito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la solicitud
+                  payload:
+                    type: string
+                    description: Mensaje del estado de la eliminación 
+                example:
+                  status: success
+                  payload: El producto fue eliminado con éxito
+        '404':
+          description: (Not Found). No fue posible eliminar el producto
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la solicitud
+                  error:
+                    type: string
+                    description: Mensaje de error 
+                example:
+                  status: error
+                  error: No es posible eliminar el producto con mongoose
+        '401':
+          description: (Unauthorized). No está autorizado
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Unauthorized
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+          format: ObjectId
+          description: ID que se genera automáticamente en MongoDB Atlas
+        code:
+          type: string
+          description: Código del producto, puede ser el SKU (Código de referencia - Stock Kipping Unit)
+          required: true
+        title:
+          type: string
+          description: Nombre del producto
+          required: true
+        description:
+          type: string
+          description: Descripción corta del producto
+          required: true
+        thumbnails:
+          type: array
+          items:
+            type: string
+          description: Arreglo de enlaces hacia las imagenes de producto. Al menos se requiere un enlace dentro del arreglo
+          required: true
+        price:
+          type: number
+          format: float
+          description: Precio del producto, de preferencia colocar unicamente 2 digitos decimales
+          required: true
+        stock:
+          type: integer
+          description: Cantidad de productos en el almacén
+          required: true
+        status:
+          type: boolean
+          description: Estado del producto, true si esta activo, false si esta inactivo. No es requerido, pero si no proporciona valor se va el valor a false por default
+        category:
+          type: string
+          description: Categoría del producto
+          required: true
+        owner:
+          type: string
+          description: Propietario del producto. Se coloca el correo electrónico del usuario PREMIUM, o si el administrador lo registró tiene el valor de admin
+      examples:
+        _id: 64b33434612c887886e81ea3
+        code: '1001'
+        title: Reloj inteligente de 1.72 pulg. IP68
+        description: Reloj inteligente IP68 para dama o caballero
+        thumbnails: 
+          - https://m.media-amazon.com/images/I/51urWDH94tL._AC_SL1200_.jpg
+        price: 599
+        stock: 10
+        status: true
+        category: smartwatch
+        owner: admin
+

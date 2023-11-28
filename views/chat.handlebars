@@ -1,0 +1,25 @@
+<button class="open-button" onclick="return openForm()" type="button">Chat</button>
+
+<div class="container popup-chat" id="chatForm">
+    <div class="chat-box">
+        <h3>Chat de Clientes</h3>
+        <div id="box" class="caja"></div>
+    </div>
+    <div >
+        <form class="form-box" onsubmit="return addMessages()">
+            <div class="mb-3">
+                <input type="email" id="username" max-size="42" size="42" placeholder="su correo...">
+            </div>
+            <div class="mb-3">
+                <textarea class="form-control" id="usermessage" cols="5" rows="3" placeholder="su mensaje..."></textarea>
+            </div>
+            <div class="mb-3">
+                <input type="submit" class="btn" value="Enviar">
+                <input type="button" id="endBtn" class="btn-end" value="Finalizar Chat">
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/chat.js"></script>

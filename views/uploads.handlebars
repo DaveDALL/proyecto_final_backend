@@ -1,0 +1,35 @@
+<head>
+    <div>
+        <h3>CARGAR IMAGENES Y DOCUMENTOS</h3>
+    </div>
+</head>
+<main>
+    <div class="avatar">
+        <label for="uploadAvatar"><h5><strong>CARGAR AVATAR</strong></h5></label>
+        <form action="/api/users/{{userId}}/avatar" enctype="multipart/form-data" method="post" name="uploadAvatar">
+            <label for="avatarImage"><strong>Seleccione para cargar su Avatar</strong></label>
+            <input type="file" name="avatarImage" id="avatarImage" class="avatar-image">
+            <input type="submit" value="Cargar Avatar">
+        </form>
+    </div>
+    <div class="images-product">
+        <label for="uploadProducts"><h5><strong>CARGAR IMAGENES DE PRODUCTOS (SELECCIONE MÁXIMO 3 IMAGENES)</strong></h5></label>
+        <form action="/api/users/{{userId}}/productImages" enctype="multipart/form-data" method="post" name="uploadProducts">
+            <label for="productImages"><strong>Seleccione las imagenes de su producto</strong></label>
+            <input type="file" name="productImages" id="productImages" class="product-images" multiple="true">
+            <input type="submit" value="Cargar Imagenes">
+        </form>
+    </div>
+     <div class="documents">
+        <label for="uploadDocuments"><h5><strong>CARGAR DOCUMENTOS</strong></h5></label>
+        <form action="/api/users/{{userId}}/documents" enctype="multipart/form-data" method="post" name="uploadDocuments">
+            <label for="idDocument"><strong>Seleccione el documento PDF de su ID</strong></label>
+            <input type="file" name="idDocument" id="idDocument" class="id-documnet">
+            <label for="idDocument"><strong>Seleccione el documento PDF de su comprobante de Domicilio</strong></label>
+            <input type="file" name="addressProof" id="addressProof" class="address-proof">
+            <label for="idDocument"><strong>Seleccione el documento PDF de su estado de Cuenta</strong></label>
+            <input type="file" name="accountStatement" id="accountStatement" class="account-statement">
+            <input type="submit" value="Cargar Documentos">
+        </form>
+    </div>
+</main>

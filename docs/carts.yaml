@@ -1,0 +1,405 @@
+paths:
+  /api/carts/{cid}:
+    get:
+      summary: Obtiene un cart por su ID
+      tags:
+        - Obtiene un cart por su ID
+      parameters:
+        - in: path
+          name: cid
+          schema:
+            type: string
+            format: ObjectId
+          required: true
+          description: ID del cart autogenerado en MongoDB
+      responses:
+        '200':
+          description: (OK). Se obtiene el cart por su ID
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Cart'
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la solicitud
+                  payload:
+                    type: object
+                    description: Cart con los productos y cantidades
+              example:
+                status: success
+                payload:
+                  _id: 650176830b65904624bb631a
+                  products: 
+                    - productId: 64b33434612c887886e81ea3
+                      qty: 5
+                    - productId: 64b338440099a475800c0636
+                      qty: 3
+        '404':
+          description: (Not Found). No fue posible obtener el cart por su ID
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la solicitud
+                  error:
+                    type: string
+                    description: Mensaje de error 
+                example:
+                  status: error
+                  error: No es posible obtener el producto por su ID con mongoose
+        '401':
+          description: (Unauthorized). No está autorizado
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Unauthorized
+    put:
+      summary: Actualiza un cart por su ID
+      tags:
+        - Actualiza un cart por su ID
+      parameters:
+        - in: path
+          name: cid
+          schema:
+            type: string
+            format: ObjectId
+          required: true
+          description: ID del cart autogenerado en MongoDB
+      requestBody:
+        description: Se agrega un objeto que contiene el ID del producto y la cantidad de ese producto. Los productos se agregan de uno en uno
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cart'
+            example:
+              productId: 64b33434612c887886e81ea3
+              qty: 3
+      responses:
+        '202':
+          description: (Accepted). El cart se actualizó con éxito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la solicitud
+                  payload:
+                    type: string
+                    description: Mensaje del estado de la actualización 
+                example:
+                  status: success
+                  payload: El cart fue actualizado con éxito
+        '404':
+          description: (Not Found). No fue posible actualizar el cart
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la solicitud
+                  error:
+                    type: string
+                    description: Mensaje de error 
+                example:
+                  status: error
+                  error: No es posible actualizar el cart con mongoose
+        '401':
+          description: (Unauthorized). No está autorizado
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Unauthorized
+  /api/carts/newCart:
+    post:
+      summary: Crea un cart nuevo
+      tags:
+        - Crea un cart nuevo
+      requestBody:
+        description: Se agrega un arreglo de productos vacio. No incluir el _id, ya que este se autogenera en MongoDB Atlas
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cart'
+            example:
+              products: []
+      responses:
+        '201':
+          description: (Created). El cart se creó con éxito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la solicitud
+                  payload:
+                    type: string
+                    description: Mensaje del estado de la creación 
+                example:
+                  status: success
+                  payload: 
+                    _id: 650176830b65904624bb631a
+                    products: []
+        '404':
+          description: (Not Found). No fue posible crear el cart nuevo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la solicitud
+                  error:
+                    type: string
+                    description: Mensaje de error 
+                example:
+                  status: error
+                  error: No es posible crear el cart nuevo con mongoose
+        '401':
+          description: (Unauthorized). No está autorizado
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Unauthorized
+  /api/carts/{cid}/products/{pid}:
+    delete:
+      summary: Elimina un producto cart por su ID
+      tags:
+        - Elimina un producto del cart por su ID
+      parameters:
+        - in: path
+          name: cid
+          schema:
+            type: string
+            format: ObjectId
+          required: true
+          description: ID del cart autogenerado en MongoDB
+        - in: path
+          name: pid
+          schema:
+            type: string
+            format: ObjectId
+          required: true
+          description: ID del producto autogenerado en MongoDB
+      responses:
+        '202':
+          description: (Accepted). El producto se eliminó del cart con éxito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la solicitud
+                  payload:
+                    type: string
+                    description: Mensaje del estado de la actualización 
+                example:
+                  status: success
+                  payload: El producto se eliminó del cart con éxito
+        '404':
+          description: (Not Found). No fue posible eliminar el producto del cart
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la solicitud
+                  error:
+                    type: string
+                    description: Mensaje de error 
+                example:
+                  status: error
+                  error: No fue posible eliminar el producto del cart con mongoose
+        '401':
+          description: (Unauthorized). No está autorizado
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Unauthorized
+  /api/carts/cart/{cid}:
+    delete:
+      summary: Elimina un cart por su ID
+      tags:
+        - Elimina un cart por su ID
+      parameters:
+        - in: path
+          name: cid
+          schema:
+            type: string
+            format: ObjectId
+          required: true
+          description: ID del cart autogenerado en MongoDB  
+      responses:
+        '202':
+          description: (Accepted). El cart se eliminó con éxito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la solicitud
+                  payload:
+                    type: string
+                    description: Mensaje del estado de la actualización 
+                example:
+                  status: success
+                  payload: El cart se eliminó con éxito
+        '404':
+          description: (Not Found). No fue posible eliminar el cart
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la solicitud
+                  error:
+                    type: string
+                    description: Mensaje de error 
+                example:
+                  status: error
+                  error: No fue posible eliminar el cart con mongoose
+        '401':
+          description: (Unauthorized). No está autorizado
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Unauthorized
+  /api/carts/{cid}/purchase:
+    post:
+      summary: Compra de productos del cart por su ID
+      tags:
+        - Compra de productos de un cart por su ID
+      parameters:
+        - in: path
+          name: cid
+          schema:
+            type: string
+            format: ObjectId
+          required: true
+          description: ID del cart autogenerado en MongoDB  
+      responses:
+        '202':
+          description: (Accepted). El Ticket se creo con éxito
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Ticket'
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la solicitud
+                  payload:
+                    type: object
+                    description: Objeto con el contenido de los datos del ticket
+                example:
+                  status: success
+                  payload:
+                    ticket:
+                      _id: 6507bc7360ca0b9a5e773435
+                      code: '0.273bab73e1734'
+                      buyedProducts:
+                        - productId: 64b3388d0099a475800c0638
+                          qty: 2
+                          subtotal: 1498
+                        - productId: 64b338440099a475800c0636
+                          qty: 2
+                          subtotal: 2598
+                      amount: 5254
+                      purchaser: jperez@mail.com
+                      purchase_datetime: '2023-09-14T08:02:51.299+00:00'
+                    outStock:
+                      - '64b33434612c887886e81ea3'
+        '404':
+          description: (Not Found). No fue posible crear el ticket
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la solicitud
+                  error:
+                    type: string
+                    description: Mensaje de error 
+                example:
+                  status: error
+                  error: No fue posible crear el ticket con mongoose
+        '401':
+          description: (Unauthorized). No está autorizado
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Unauthorized
+
+components:
+  schemas:
+    Cart:
+      type: object
+      description: arreglo de los productos y cantidades que se agregan al cart
+      properties:
+        _id:
+          type: string
+          format: ObjectId
+          description: ID que se genera automáticamente en MongoDB Atlas
+        products:
+          type: array
+          description: Agrreglo de productos que se agregan al cart
+          properties:
+            productId:
+              type: string
+              description: ID del producto agregado al carrito
+            qty:
+              type: integer
+              description: cantidad del mismo producto
+    Ticket:
+      type: object
+      description: objeto con la información del Ticket
+      properties:
+        code:
+          type: string
+          description: Número del ticket generado automáticamente dentro de la API
+        buyedProducts:
+          type: array
+          description: Arreglo de Productos comprados, con cantidad y subtotal
+        amount:
+          type: number
+          format: float
+          description: Monto total de la comprados
+        purchaser:
+          type: string
+          description: Correo electrónico del usuario que realizó la compra
+        purchase_datetime:
+          type: string
+          format: date-time
+          description: Fecha y hora de compra en formato UTC      
