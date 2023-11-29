@@ -1,4 +1,4 @@
-# SERVIDOR EN CAPAS COMPLETO CON TICKETS CONTROL DE ERRORES, LOGGER Y RECUPERACION DE CONTRASEÑA MAS MULTER
+# SERVIDOR EN CAPAS COMPLETO - PROYECTO FINAL
 
 El propósito de este proyecto es realizar un servidor completo por capas; que cuente con la posibilidad de crear un ticket de compra, y proveer del manejo de errores.
 
@@ -784,7 +784,9 @@ const documentStorage = multer.diskStorage({
 
 NOTA: Para suber a usuario premium, es necesario que el usuario estandar haya subido los documentos de comprobación, ya existe um middleware que al momento de cambiar de usuario estandar a premium realiza antes esta comprobación y no se cuenta con la documentación no se podrá realizar el cambio de usuario; el cual apunta hacia el endpoint **/api/users/premium/:uid**
 
+## ACCESO A LA ADMINISTRACION DE USUARIOS
 
+Para el acceso a la administración de usuarios es importante loguearse como administrador; y abril el link
 
 
 # FIN

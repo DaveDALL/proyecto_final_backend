@@ -2,6 +2,7 @@ import express from 'express'
 import passport from 'passport'
 import uploader from '../utils/uploader.js'
 import userController from '../controllers/user.controller.js'
+import userpolicies from '../middlewares/userMiddleware/userRollValid.middleware.js'
 const { Router } = express
 const { getUserByEmailController, updateUserRollController, userMailPassRecoveryController, userPassLinkRecoveryController, userPassChangeController, uploadDocsController, getAllUsersController, delNotActivityUserController, delUserByEmailController } = userController
 const { documentsUploader } = uploader
@@ -15,7 +16,7 @@ userRouter.delete('/notActivityUsers', passport.authenticate('jwtAuth', {session
 
 userRouter.post('/currentUser', passport.authenticate('jwtAuth', {session:false}), getUserByEmailController)
 
-userRouter.post('/premium/:uid', passport.authenticate('jwtAuth', {session:false}), updateUserRollController)
+userRouter.post('/premium/:uid', passport.authenticate('jwtAuth', {session:false}), userpolicies(['ADMIN']), updateUserRollController)
 
 userRouter.post('/recoveryPass', userMailPassRecoveryController)
 
@@ -25,6 +26,6 @@ userRouter.post('/passChanger', userPassChangeController)
 
 userRouter.post('/:uid/documents', passport.authenticate('jwtAuth', {session:false}), documentsUpload, uploadDocsController)
 
-userRouter.delete('/deleteUser', passport.authenticate('jwtAuth', {session:false}), delUserByEmailController)
+userRouter.delete('/deleteUser', passport.authenticate('jwtAuth', {session:false}), userpolicies(['ADMIN']), delUserByEmailController)
 
 export default userRouter
