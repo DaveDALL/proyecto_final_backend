@@ -14,7 +14,7 @@ dotenv.config({
 })
 
 export default {
-    PORT: process.env.PORT || 3000,
+    PORT: process.env.PORT || 80,
     MONGO_URL: process.env.MONGO_URL,
     SECRET: process.env.SECRET,
     ADMIN_NAME: process.env.ADMIN_NAME,
