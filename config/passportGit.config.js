@@ -13,7 +13,7 @@ const initializePassportGit = () => {
             {
                 clientID: CLIENT_ID,
                 clientSecret: CLIENT_SECRET,
-                callbackURL: `http://${url.host}${CALLBACK_URL}`
+                callbackURL: `${CALLBACK_URL}`
             }, async (accessToken, refreshToken, profile, done) => {
                 try {
                     let gitUserDTO = new UserGitDTO(profile._json)
