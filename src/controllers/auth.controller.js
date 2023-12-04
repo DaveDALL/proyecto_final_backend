@@ -43,10 +43,10 @@ const authLoginController = async (req, res) => {
             req.session.userName = foundUser.userName
             req.session.lastName = foundUser.lastName || ' '
             req.session.userRoll = foundUser.userRoll
-            res.cookie('jwtCookie', token).redirect('/products')
-        }else res.redirect('/')
+            res.status(200).cookie('jwtCookie', token).redirect('/products')
+        }else res.status(400).redirect('/')
     }catch(err) {
-        res.redirect('/userRegistration')
+        res.status(401).redirect('/userRegistration')
         req.logger.warning(`No fue posible inciar sesión con los datos del usuario`)   
     }
 }

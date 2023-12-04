@@ -25,7 +25,7 @@ const githubController = async (req, res) => {
             else throw new Error('No fue posible autentificar con github')
         }
     }catch(err) {
-        res.redirect('/')
+        res.status(401).redirect('/')
         req.logger.warning('No es posible autentificar con guthub')
     }
 }
