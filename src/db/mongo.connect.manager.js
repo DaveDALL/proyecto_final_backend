@@ -9,8 +9,8 @@ const { MONGO_URL } = CONFIG
 export default {
     connect: async () => {
         const config = {
-            connectTimeoutMS: 3000,
-            socketTimeoutMS: 3000,
+            connectTimeoutMS: 7000,
+            socketTimeoutMS: 7000,
             useUnifiedTopology: true
           }
         return await mongoose.connect(MONGO_URL, config).then(connection => {
