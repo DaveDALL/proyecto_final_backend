@@ -8,7 +8,12 @@ const { MONGO_URL } = CONFIG
 
 export default {
     connect: async () => {
-        return await mongoose.connect(MONGO_URL, {}).then(connection => {
+        const config = {
+            connectTimeoutMS: 5000,
+            socketTimeoutMS: 5000,
+            useUnifiedTopology: true
+          }
+        return await mongoose.connect(MONGO_URL, config).then(connection => {
             if(!connection) {
                 CustomizedError.createError({
                     name: 'Error en el usuario',
