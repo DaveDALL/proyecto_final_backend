@@ -44,6 +44,10 @@ const uploaderController = async (req, res) =>{
     res.render('uploads', {userId: userId})
 }
 
+const usersAdminController = async (req, res) => {
+    res.render('userAdmin', {})
+}
+
 export default {
     userRegistrationViewController,
     userLoginController,
@@ -51,5 +55,6 @@ export default {
     productViewController,
     cartViewController,
     userPassRecoveryViewController,
-    uploaderController
+    uploaderController,
+    usersAdminController
 }

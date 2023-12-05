@@ -136,3 +136,8 @@ nextButton.addEventListener('click', () => nextPage(nextLinkPage))
 
 let cartViewButton = document.getElementById("viewCart")
 cartViewButton.addEventListener('click', viewCart)
+
+let usersAdminLink = document.getElementById('userAdmin')
+if(mail !== 'adminCoder@coder.com') {
+    usersAdminLink.hidden = true
+}

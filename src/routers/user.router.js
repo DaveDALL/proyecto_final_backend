@@ -10,7 +10,7 @@ const userRouter = Router()
 
 let documentsUpload = documentsUploader.fields([{name: 'idDocument', maxCount: 1}, {name: 'addressProof', maxCount: 1}, {name: 'accountStatement', maxCount: 1}])
 
-userRouter.get('/allUserrs', passport.authenticate('jwtAuth', {session:false}), getAllUsersController)
+userRouter.get('/getAllUsers', passport.authenticate('jwtAuth', {session:false}), userpolicies(['ADMIN']), getAllUsersController)
 
 userRouter.delete('/notActivityUsers', passport.authenticate('jwtAuth', {session:false}), delNotActivityUserController)
 
