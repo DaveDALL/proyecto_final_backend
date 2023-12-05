@@ -43,7 +43,7 @@ const authLoginController = async (req, res) => {
             req.session.userName = foundUser.userName
             req.session.lastName = foundUser.lastName || ' '
             req.session.userRoll = foundUser.userRoll
-            res.status(200).cookie('jwtCookie', token).redirect('/products')
+            res.status(200).cookie('jwtCookie', token,  {httpOnly: true, sameSite: 'strict', secure: true }).redirect('/products')
         }else res.status(400).redirect('/')
     }catch(err) {
         res.status(401).redirect('/userRegistration')

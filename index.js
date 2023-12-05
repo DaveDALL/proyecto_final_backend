@@ -70,7 +70,12 @@ app.use(session({
     }),
     secret: SECRET,
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+        secure: true,
+        httpOnly: true,
+        sameSite: 'strict',
+      }
 }))
 
 //inicializar passport
