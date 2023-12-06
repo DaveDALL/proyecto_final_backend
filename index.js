@@ -2,6 +2,7 @@ import express from 'express'
 import http from 'http'
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
+import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import handlebars from 'express-handlebars'
 import passport from 'passport'
@@ -56,6 +57,9 @@ app.use('/APIDocumentation', swaggerUiExpress.serve, swaggerUiExpress.setup(spec
 app.use(express.static(__dirname + '/public'))
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
+
+//uso de cors
+app.use(cors())
 
 //Configuracion de Handlebars
 app.engine('handlebars', handlebars.engine())
